@@ -7,7 +7,7 @@ RUN yum install -y tar
 RUN curl -L -O -b "oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.rpm
 RUN rpm -ivh jdk-7u80-linux-x64.rpm && rm jdk-7u80-linux-x64.rpm
 
-RUN curl https://s3-ap-northeast-1.amazonaws.com/gennai/release/gungnir-client-0.0.1-bin.tar.gz | tar zx -C /opt
+RUN curl https://s3-ap-northeast-1.amazonaws.com/gennai/release/dev/gungnir-client-0.0.1-bin.tar.gz | tar zx -C /opt
 RUN chown -R root:root /opt/gungnir-client-0.0.1
 RUN ln -s /opt/gungnir-client-0.0.1 /opt/gungnir-client
 
