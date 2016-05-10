@@ -1,19 +1,15 @@
-FROM centos:6
+FROM alpine
 MAINTAINER siniida <sinpukyu@gmail.com>
 
-RUN yum update -y
-RUN yum install -y tar
+ENV GUNGNIR_VERSION=0.0.1
 
-RUN curl -L -O -b "oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jre-7u80-linux-x64.rpm
-RUN rpm -ivh jre-7u80-linux-x64.rpm && rm jre-7u80-linux-x64.rpm
+RUN apk --no-cache add openjdk8-jre bash \
+  && mkdir /opt \
+  && wget -O - https://s3-ap-northeast-1.amazonaws.com/gennai/release/gungnir-client-${GUNGNIR_VERSION}-bin.tar.gz | tar zx -C /opt \
+  && chown -R root:root /opt/gungnir-client-${GUNGNIR_VERSION} \
+  && ln -s /opt/gungnir-client-${GUNGNIR_VERSION} /opt/gungnir-client
 
-RUN curl https://s3-ap-northeast-1.amazonaws.com/gennai/release/gungnir-client-0.0.1-bin.tar.gz | tar zx -C /opt
-RUN chown -R root:root /opt/gungnir-client-0.0.1
-RUN ln -s /opt/gungnir-client-0.0.1 /opt/gungnir-client
-
-RUN yum clean all
-
-ENV JAVA_HOME /usr/java/default
+ENV JAVA_HOME /usr/lib/jvm/default-jvm/jre
 
 WORKDIR /opt/gungnir-client
 
